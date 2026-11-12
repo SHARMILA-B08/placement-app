@@ -1,0 +1,6 @@
+{
+  "name": "Smart Placement Prep – Aptitude & Coding Practice",
+  "description": "Comprehensive interactive placement preparation platform for engineering students and freshers, covering aptitude, logical reasoning, error finding, and coding in Python, C, C++, and Java.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
