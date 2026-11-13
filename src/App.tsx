@@ -47,6 +47,7 @@ export default function App() {
 
   // Modals & UI controls
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [desktopSidebarCollapsed, setDesktopSidebarCollapsed] = useState<boolean>(false);
   const [aiModalOpen, setAiModalOpen] = useState<boolean>(false);
   const [aiAvailable, setAiAvailable] = useState<boolean>(false);
 
@@ -158,7 +159,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans overflow-x-clip">
       {/* 1. Top Header */}
       <Header
         stats={stats}
@@ -166,13 +167,15 @@ export default function App() {
         onNavigate={handleNavigate}
         mobileMenuOpen={mobileMenuOpen}
         onToggleMobileMenu={() => setMobileMenuOpen((prev) => !prev)}
+        desktopSidebarCollapsed={desktopSidebarCollapsed}
+        onToggleDesktopSidebar={() => setDesktopSidebarCollapsed((prev) => !prev)}
         onOpenAIGenerator={() => setAiModalOpen(true)}
         aiAvailable={aiAvailable}
       />
 
-      {/* 2. Main Layout (Sidebar + Content Stage) */}
-      <div className="flex-1 flex">
-        {/* Sidebar (Desktop fixed + Mobile drawer) */}
+      {/* 2. Main Layout (In-Flow Sidebar + In-Flow Content Stage) */}
+      <div className="flex-1 flex w-full min-h-[calc(100vh-4rem)]">
+        {/* Sidebar: in-flow flex item on desktop, slide-over drawer on mobile */}
         <Sidebar
           currentView={
             currentView === 'category' ? `category-${selectedCategoryId}` : currentView
@@ -181,10 +184,11 @@ export default function App() {
           stats={stats}
           mobileMenuOpen={mobileMenuOpen}
           onCloseMobileMenu={() => setMobileMenuOpen(false)}
+          collapsed={desktopSidebarCollapsed}
         />
 
-        {/* Content View Stage */}
-        <main className="flex-1 md:pl-64 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+        {/* Content View Stage: fills exactly the remaining space */}
+        <main className="flex-1 min-w-0 p-3 sm:p-6 lg:p-8 overflow-y-auto">
           {currentView === 'dashboard' && (
             <Dashboard
               stats={stats}

@@ -208,26 +208,26 @@ export const MockTestSession: React.FC<MockTestSessionProps> = ({
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       {/* Mock Exam Top Header */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="text-base sm:text-lg font-bold text-slate-900">
+      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+        <div className="min-w-0">
+          <h1 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
             Smart Placement Mock Test (30 Minutes / 30 Questions)
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-500 mt-0.5">
             Exam simulation mode. Full solutions will be unlocked upon final submission.
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
           {/* 30:00 Countdown Timer */}
           <div
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border font-mono font-bold text-sm tabular-nums ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border font-mono font-bold text-xs sm:text-sm tabular-nums ${
               secondsRemaining < 300
                 ? 'bg-rose-50 border-rose-200 text-rose-700 animate-pulse'
                 : 'bg-indigo-50 border-indigo-200 text-indigo-900'
             }`}
           >
-            <Clock className="w-4 h-4 text-indigo-600" />
+            <Clock className="w-4 h-4 text-indigo-600 shrink-0" />
             <span>Time Left: {formatTimer(secondsRemaining)}</span>
           </div>
 
@@ -235,7 +235,7 @@ export const MockTestSession: React.FC<MockTestSessionProps> = ({
           <button
             type="button"
             onClick={() => setShowSubmitModal(true)}
-            className="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm transition-all cursor-pointer flex items-center gap-1.5 active:scale-95"
+            className="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm transition-all cursor-pointer flex items-center gap-1.5 active:scale-95 whitespace-nowrap"
           >
             <Send className="w-3.5 h-3.5" />
             Submit Test
@@ -244,39 +244,39 @@ export const MockTestSession: React.FC<MockTestSessionProps> = ({
       </div>
 
       {/* Main Grid: Question View (Left 8 cols) & Question Palette (Right 4 cols) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-start">
         {/* Left Column: Active Question */}
-        <div className="lg:col-span-8 bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div className="lg:col-span-8 min-w-0 bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
           {/* Question Header */}
-          <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/70 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-indigo-100 text-indigo-800">
+          <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 bg-slate-50/70 flex flex-wrap items-center justify-between gap-2.5">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 min-w-0">
+              <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-indigo-100 text-indigo-800 whitespace-nowrap">
                 Question {currentIndex + 1} of {questions.length}
               </span>
-              <div className="flex items-center gap-2 text-xs text-slate-500">
-                <span className="font-semibold text-slate-800 capitalize">{currentQuestion.category}</span>
+              <div className="flex items-center gap-1.5 sm:gap-2 text-xs text-slate-500 min-w-0">
+                <span className="font-semibold text-slate-800 capitalize whitespace-nowrap">{currentQuestion.category}</span>
                 <span aria-hidden="true">·</span>
-                <span>{currentQuestion.topic}</span>
+                <span className="truncate">{currentQuestion.topic}</span>
               </div>
             </div>
 
             <button
               type="button"
               onClick={handleToggleMarkReview}
-              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold border cursor-pointer transition-colors ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold border cursor-pointer transition-colors shrink-0 ${
                 statuses[currentQuestion.id] === 'marked_review'
                   ? 'bg-purple-100 border-purple-300 text-purple-800'
                   : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
               }`}
             >
               <Bookmark className={`w-3.5 h-3.5 ${statuses[currentQuestion.id] === 'marked_review' ? 'fill-purple-600' : ''}`} />
-              {statuses[currentQuestion.id] === 'marked_review' ? 'Marked for Review' : 'Mark for Review'}
+              <span>{statuses[currentQuestion.id] === 'marked_review' ? 'Marked for Review' : 'Mark for Review'}</span>
             </button>
           </div>
 
           {/* Question Body */}
-          <div className="p-6 space-y-6">
-            <h2 className="text-lg font-bold text-slate-900 leading-snug">
+          <div className="p-4 sm:p-6 space-y-5 sm:space-y-6">
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 leading-snug break-words">
               {currentQuestion.questionText}
             </h2>
 
@@ -295,7 +295,7 @@ export const MockTestSession: React.FC<MockTestSessionProps> = ({
             )}
 
             {/* Options */}
-            <div className="space-y-3 pt-2">
+            <div className="space-y-3 pt-1">
               {currentQuestion.options.map((opt, idx) => {
                 const isSelected = currentAnswer === idx;
                 return (
@@ -303,7 +303,7 @@ export const MockTestSession: React.FC<MockTestSessionProps> = ({
                     key={idx}
                     type="button"
                     onClick={() => handleSelectOption(idx)}
-                    className={`w-full p-4 rounded-xl border text-left flex items-start gap-3 transition-colors cursor-pointer ${
+                    className={`w-full p-3.5 sm:p-4 rounded-xl border text-left flex items-start gap-3 transition-colors cursor-pointer ${
                       isSelected
                         ? 'border-indigo-600 bg-indigo-50/70 text-indigo-950 ring-2 ring-indigo-600/20'
                         : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50 text-slate-800'
@@ -316,7 +316,7 @@ export const MockTestSession: React.FC<MockTestSessionProps> = ({
                     >
                       {optionLetters[idx]}
                     </span>
-                    <span className="flex-1 pt-0.5 text-sm sm:text-base font-medium break-words">
+                    <span className="flex-1 min-w-0 pt-0.5 text-sm sm:text-base font-medium break-words">
                       {opt}
                     </span>
                   </button>
@@ -325,7 +325,7 @@ export const MockTestSession: React.FC<MockTestSessionProps> = ({
             </div>
 
             {/* Question Actions */}
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-100">
+            <div className="flex flex-wrap items-center justify-between gap-2.5 pt-4 border-t border-slate-100">
               <div className="flex items-center gap-2">
                 <button
                   type="button"
@@ -346,23 +346,33 @@ export const MockTestSession: React.FC<MockTestSessionProps> = ({
                 </button>
               </div>
 
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleSaveAndNext}
-                  disabled={currentIndex === questions.length - 1}
-                  className="px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer flex items-center gap-1"
-                >
-                  Save & Next
-                  <ChevronRight className="w-4 h-4" />
-                </button>
+              <div className="flex items-center gap-2 ml-auto">
+                {currentIndex < questions.length - 1 ? (
+                  <button
+                    type="button"
+                    onClick={handleSaveAndNext}
+                    className="px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 cursor-pointer flex items-center gap-1"
+                  >
+                    Save & Next
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setShowSubmitModal(true)}
+                    className="px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 cursor-pointer flex items-center gap-1.5"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    Finish & Submit
+                  </button>
+                )}
               </div>
             </div>
           </div>
         </div>
 
         {/* Right Column: Question Palette Navigation */}
-        <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-xs p-5 space-y-5">
+        <div className="lg:col-span-4 min-w-0 bg-white rounded-2xl border border-slate-200 shadow-xs p-4 sm:p-5 space-y-4 lg:sticky lg:top-20">
           <div>
             <h3 className="font-bold text-sm text-slate-900">Question Palette</h3>
             <p className="text-xs text-slate-500">Click any number to jump to question</p>

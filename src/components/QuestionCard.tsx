@@ -121,18 +121,18 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   return (
     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden transition-all">
       {/* Top Header: Progress, Category/Topic, Difficulty & 60s Timer */}
-      <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/70 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-indigo-100 text-indigo-800">
+      <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 bg-slate-50/70 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 min-w-0">
+          <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-indigo-100 text-indigo-800 whitespace-nowrap">
             Q {currentIndex + 1} of {totalQuestions}
           </span>
-          <div className="flex items-center gap-2 text-xs text-slate-500">
-            <span className="font-semibold text-slate-800 capitalize">{question.category}</span>
+          <div className="flex items-center gap-1.5 sm:gap-2 text-xs text-slate-500 min-w-0">
+            <span className="font-semibold text-slate-800 capitalize whitespace-nowrap">{question.category}</span>
             <span aria-hidden="true">·</span>
-            <span className="text-slate-600">{question.topic}</span>
+            <span className="text-slate-600 truncate">{question.topic}</span>
           </div>
           <span
-            className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${getDifficultyBadge(
+            className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border whitespace-nowrap ${getDifficultyBadge(
               question.difficulty
             )}`}
           >
@@ -140,10 +140,10 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           </span>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {/* 60s Countdown Timer */}
           <div
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-lg border font-mono text-xs font-semibold tabular-nums transition-colors ${getTimerColorClass()}`}
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg border font-mono text-xs font-semibold tabular-nums transition-colors ${getTimerColorClass()}`}
             title="Question Timer (Target: Under 60s)"
           >
             <Clock className="w-3.5 h-3.5" />
@@ -167,10 +167,10 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
       </div>
 
       {/* Main Content Area */}
-      <div className="p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-5 sm:space-y-6">
         {/* Question Text */}
         <div className="space-y-3">
-          <h2 className="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+          <h2 className="text-base sm:text-xl font-bold text-slate-900 leading-snug break-words">
             {question.questionText}
           </h2>
 
@@ -227,7 +227,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 type="button"
                 disabled={isSubmitted}
                 onClick={() => setSelectedOption(idx)}
-                className={`w-full p-4 rounded-xl border text-left flex items-start gap-3 transition-all duration-150 cursor-pointer disabled:cursor-default ${buttonStyle}`}
+                className={`w-full p-3.5 sm:p-4 rounded-xl border text-left flex items-start gap-3 transition-all duration-150 cursor-pointer disabled:cursor-default ${buttonStyle}`}
               >
                 {/* Option Letter Indicator */}
                 <span
@@ -244,7 +244,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                   {letter}
                 </span>
 
-                <div className="flex-1 pt-0.5 text-sm sm:text-base font-medium break-words">
+                <div className="flex-1 min-w-0 pt-0.5 text-sm sm:text-base font-medium break-words">
                   {optionText}
                 </div>
 
@@ -262,8 +262,8 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
         {/* Action Button: Submit Answer (before submission) */}
         {!isSubmitted && (
-          <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-            <span className="text-xs text-slate-500">
+          <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-slate-100">
+            <span className="text-xs text-slate-500 text-center sm:text-left">
               {selectedOption === null
                 ? 'Select an option above to submit'
                 : `Option ${optionLetters[selectedOption]} selected`}
@@ -272,7 +272,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               type="button"
               disabled={selectedOption === null}
               onClick={handleSubmit}
-              className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed shadow-sm transition-all cursor-pointer active:scale-95"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed shadow-sm transition-all cursor-pointer active:scale-95"
             >
               Submit Answer
             </button>
@@ -381,7 +381,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               <button
                 type="button"
                 onClick={onNextQuestion}
-                className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 shadow-md flex items-center gap-2 cursor-pointer transition-all active:scale-95"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95"
               >
                 <span>{isLastQuestion ? 'Complete Practice & View Results' : 'Next Question'}</span>
                 <ArrowRight className="w-4 h-4" />
